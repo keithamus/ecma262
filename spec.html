@@ -4766,7 +4766,7 @@
     </emu-clause>
 
     <emu-clause id="sec-copydataproperties" aoid="CopyDataProperties">
-      <h1>CopyDataProperties (_target_, _source_, _excluded_)</h1>
+      <h1>CopyDataProperties (_target_, _source_, _excludedItems_)</h1>
       <p>When the abstract operation CopyDataProperties is called with arguments _target_, _source_, and _excludedItems_, the following steps are taken:</p>
       <emu-alg>
         1. Assert: Type(_target_) is Object.
@@ -4777,7 +4777,7 @@
         1. For each element _nextKey_ of _keys_ in List order, do
           1. Let _excluded_ be *false*.
           1. For each element _e_ of _excludedItems_ in List order, do
-            1. If SameValue(_e_, _nextKey_) is true, then
+            1. If SameValue(_e_, _nextKey_) is *true*, then
               1. Set _excluded_ to *true*.
           1. If _excluded_ is *false*, then
             1. Let _desc_ be ? _from_.[[GetOwnProperty]](_nextKey_).
@@ -11683,7 +11683,7 @@
           CoverInitializedName[?Yield, ?Await]
           PropertyName[?Yield, ?Await] `:` AssignmentExpression[+In, ?Yield, ?Await]
           MethodDefinition[?Yield, ?Await]
-          `...` AssignmentExpression[In, ?Yield, ?Await]
+          `...` AssignmentExpression[+In, ?Yield, ?Await]
 
         PropertyName[Yield, Await] :
           LiteralPropertyName
@@ -14484,11 +14484,10 @@
 
       <emu-clause id="sec-runtime-semantics-destructuringassignmentevaluation-nested-rest-prohibition">
         <h1>Static Semantics: Early Errors</h1>
-        <emu-grammar>
-          AssignmentRestProperty[Yield, Await] :
-            `...` DestructuringAssignmentTarget[Yield, Await]
-        </emu-grammar>
-        <ul><li>It is a Syntax Error if |DestructuringAssignmentTarget| is an |ArrayLiteral| or an |ObjectLiteral|.</li></ul>
+        <emu-grammar>AssignmentRestProperty : `...` DestructuringAssignmentTarget</emu-grammar>
+        <ul>
+          <li>It is a Syntax Error if |DestructuringAssignmentTarget| is an |ArrayLiteral| or an |ObjectLiteral|.</li>
+        </ul>
       </emu-clause>
 
       <emu-clause id="Rest-RuntimeSemantics-PropertyDestructuringAssignmentEvaluation">
@@ -15796,14 +15795,14 @@
             `{` BindingPropertyList `,` `}`
         </emu-grammar>
         <emu-alg>
-          1. Perform ? PropertyBindingInitialization for |BindingPropertyList| using _value_ and _environment_ as the argument.
+          1. Perform ? PropertyBindingInitialization for |BindingPropertyList| using _value_ and _environment_ as the arguments.
           1. Return NormalCompletion(~empty~).
         </emu-alg>
 
         <emu-grammar>ObjectBindingPattern : `{` BindingRestProperty `}`</emu-grammar>
         <emu-alg>
           1. Let _excludedNames_ be a new empty List.
-          1. Return the result of performing RestBindingInitialization of _BindingRestProperty_ with _value_, _environment_ and _excludedNames_ as the arguments.
+          1. Return the result of performing RestBindingInitialization of _BindingRestProperty_ with _value_, _environment_, and _excludedNames_ as the arguments.
         </emu-alg>
 
         <emu-grammar>ObjectBindingPattern : `{` BindingPropertyList `,` BindingRestProperty `}`</emu-grammar>
