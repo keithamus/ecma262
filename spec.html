@@ -14484,10 +14484,7 @@
 
       <emu-clause id="sec-runtime-semantics-destructuringassignmentevaluation-nested-rest-prohibition">
         <h1>Static Semantics: Early Errors</h1>
-        <emu-grammar>
-          AssignmentRestProperty[Yield, Await] :
-            `...` DestructuringAssignmentTarget[Yield, Await]
-        </emu-grammar>
+        <emu-grammar>AssignmentRestProperty : `...` DestructuringAssignmentTarget</emu-grammar>
         <ul><li>It is a Syntax Error if |DestructuringAssignmentTarget| is an |ArrayLiteral| or an |ObjectLiteral|.</li></ul>
       </emu-clause>
 
